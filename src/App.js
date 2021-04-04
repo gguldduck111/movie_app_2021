@@ -1,6 +1,6 @@
 import React from "react"
-import PropTypes from "prop-types";
 import axios from "axios";
+import Movie from "./Movie";
 
 class App extends React.Component{
     state = {
@@ -9,11 +9,18 @@ class App extends React.Component{
     };
 
     render() {
-        const {isLoading} = this.state
-        console.log(isLoading)
+        const {isLoading,movies} = this.state
         return (
             <div>
-                <h1>{isLoading ? "Loading..." : "we are ready"}</h1>
+                <h1>{isLoading ? "Loading..." : movies.map(movie => {
+                    return <Movie
+                        key={movie.id}
+                        id={movie.id}
+                        year={movie.year}
+                        title={movie.title}
+                        summary={movie.summary}
+                        poster={movie.medium_cover_image} />
+                })}</h1>
             </div>)
     }
 
@@ -23,17 +30,19 @@ class App extends React.Component{
     }
 
     getMovies = async () => {
-        const movies = await axios.get('https://yts.mx/api/v2/list_movies.json');
-        return movies;
+        const {
+            data:{
+                data:{ movies }
+        }} = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=rating');
+        this.setState({movies, isLoading:false})
     }
 
     componentDidMount() {
-        this.getMovies().then(movie => console.log(movie));
+        this.getMovies();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('I Just updated')
-        console.log(this.state.isLoading)
     }
 
     componentWillUnmount() {
