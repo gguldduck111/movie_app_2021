@@ -1,24 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types";
+import axios from "axios";
 
 class App extends React.Component{
     state = {
-        count:0
+        isLoading : true,
+        movies: []
     };
 
-    add = () => {
-        this.setState(current => ({count:current.count + 1}))
-    };
-    minus = () => {
-        this.setState(current => ({count:current.count - 1}))
-    };
     render() {
-        console.log('Iam rendering')
+        const {isLoading} = this.state
+        console.log(isLoading)
         return (
             <div>
-                <h1>The number is {this.state.count}</h1>
-                <button onClick={this.add}>Add</button>
-                <button onClick={this.minus}>Minus</button>
+                <h1>{isLoading ? "Loading..." : "we are ready"}</h1>
             </div>)
     }
 
@@ -27,12 +22,18 @@ class App extends React.Component{
         console.log('hello')
     }
 
+    getMovies = async () => {
+        const movies = await axios.get('https://yts.mx/api/v2/list_movies.json');
+        return movies;
+    }
+
     componentDidMount() {
-        console.log("component rendered")
+        this.getMovies().then(movie => console.log(movie));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('I Just updated')
+        console.log(this.state.isLoading)
     }
 
     componentWillUnmount() {
