@@ -1,29 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #eff3f7;
-    height: 100%;
-}
-
-html,
-body,
-#potato,
-.container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.loader {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .movies {
     display: flex;
     justify-content: space-between;
@@ -52,7 +26,8 @@ body,
 .movie img {
     position: relative;
     top: -50px;
-    max-width: 120px;
+    max-width: 150px;
+    width: 100%;
     margin-right: 30px;
     box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
     0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
